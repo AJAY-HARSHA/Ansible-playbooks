@@ -1,0 +1,20 @@
+---
+- name: creating users and copying files into the users home direcory
+  hosts: all
+  tasks:
+    - name: create users
+      user:
+        name: "{{item.a}}"
+        password: "{{item.b}}"
+        home: "{{item.c}}"
+      loop:
+        - {a: raghu,b: raghu123,c: /home/raghu}
+        - {a: rani,b: rani123,c: /tmp/rani}
+    - name: copy files into user dirctory
+      copy:
+        src: "{{item.a}}"
+        dest: "{{item.b}}"
+      loop:
+        - {a: /etc/passwd,b: /home/raghu}
+        - {a: /etc/group,b: /tmp/rani}
+...
